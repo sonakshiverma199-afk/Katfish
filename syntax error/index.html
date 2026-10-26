@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnowyCare ❄️🐻‍❄️ | Classy Women's AI Healthcare & Wellness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Outfit"', '"Quicksand"', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+            body: ['"Outfit"', 'sans-serif']
+          },
+          colors: {
+            ice: {
+              50: '#F0F9FF',
+              100: '#E0F2FE',
+              200: '#BAE6FD',
+              300: '#7DD3FC',
+              400: '#38BDF8',
+              500: '#0EA5E9',
+              600: '#0284C7',
+            },
+            pookie: {
+              50: '#FFF1F2',
+              100: '#FFE4E6',
+              200: '#FECDD3',
+              300: '#FDA4AF',
+              400: '#FB7185',
+              500: '#F43F5E',
+              rose: '#FCE7F3',
+              lavender: '#F5F3FF',
+              glaze: '#E8F4F8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="theme-pink min-h-screen text-slate-700 antialiased selection:bg-pink-200 selection:text-pink-900 relative overflow-x-hidden">
+
+  <!-- Interactive Canvas Snowfall & Sparkles Background -->
+  <canvas id="snowfall-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Glowing Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-pink-200/30 via-purple-100/25 to-transparent blur-3xl pointer-events-none z-0 animate-pulse-slow"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[550px] h-[550px] rounded-full bg-gradient-to-tl from-sky-200/30 via-pink-100/25 to-transparent blur-3xl pointer-events-none z-0 animate-pulse-slower"></div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 flex flex-col min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+    <!-- Top Navigation & Brand Header -->
+    <header class="glass-panel rounded-3xl p-4 sm:p-5 mb-5 flex flex-wrap items-center justify-between gap-4 border border-white/80 shadow-soft">
+      <div class="flex items-center gap-3.5">
+        <div class="bear-avatar-container w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-pink-100 via-white to-sky-100 p-1 shadow-inner relative flex items-center justify-center border border-pink-200/50">
+          <div id="header-bear-slot" class="w-full h-full flex items-center justify-center"></div>
+          <span class="absolute -bottom-1 -right-1 bg-gradient-to-r from-pink-400 to-rose-400 text-[10px] text-white px-2 py-0.5 rounded-full font-bold shadow-sm">CARE</span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-display font-bold tracking-tight bg-gradient-to-r from-slate-800 via-pink-700 to-sky-700 bg-clip-text text-transparent">
+              SnowyCare
+            </h1>
+            <span class="text-xs px-2.5 py-1 rounded-full bg-white/80 text-pink-600 font-semibold border border-pink-200/60 shadow-xs flex items-center gap-1">
+              <span>❄️</span> Women's AI Health
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 font-medium">Classy & Feminine Personal Healthcare & Clinical Sanctuary</p>
+        </div>
+      </div>
+
+      <!-- Quick Status & Controls -->
+      <div class="flex items-center gap-2 sm:gap-2.5 ml-auto flex-wrap justify-end">
+
+        <!-- ONE-TAP EMERGENCY AMBULANCE SOS BUTTON (Always accessible) -->
+        <button onclick="openEmergencySosModal()" class="btn-sos text-xs font-bold px-3.5 py-2 rounded-2xl flex items-center gap-1.5 shadow-md active:scale-95 transition-all" title="Emergency Ambulance Assistance">
+          <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+          <i data-lucide="ambulance" class="w-4 h-4"></i>
+          <span>EMERGENCY SOS</span>
+        </button>
+
+        <!-- Notification Center Bell -->
+        <button onclick="openNotificationModal()" class="relative p-2.5 rounded-2xl bg-white/80 hover:bg-white border border-pink-200/70 text-slate-700 shadow-xs transition-all active:scale-95" title="Health Alerts & Notifications">
+          <i data-lucide="bell" class="w-4 h-4 text-pink-500"></i>
+          <span id="header-notification-badge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center shadow-xs">3</span>
+        </button>
+
+        <!-- Discreet Privacy Mode Toggle -->
+        <button onclick="togglePrivacyMode()" id="btn-privacy-toggle" class="p-2.5 rounded-2xl bg-white/80 hover:bg-white border border-pink-200/70 text-slate-700 shadow-xs transition-all active:scale-95" title="Discreet Mode (Blurs sensitive health details in public)">
+          <i data-lucide="eye" id="privacy-icon" class="w-4 h-4 text-slate-500"></i>
+        </button>
+
+        <!-- Live Clock & Date -->
+        <div class="hidden md:flex flex-col text-right px-3 py-1.5 rounded-2xl bg-white/60 border border-white/70 shadow-xs">
+          <span id="live-clock" class="text-xs font-bold text-slate-700 tracking-wide font-mono">12:00:00 PM</span>
+          <span id="live-date" class="text-[10px] text-slate-500 font-medium">Today</span>
+        </div>
+
+        <!-- Ambient Sound Player Button -->
+        <button id="btn-ambient-sound" class="btn-aesthetic text-xs font-semibold px-3 py-2 rounded-2xl flex items-center gap-1.5 bg-white/70 hover:bg-white text-slate-700 border border-pink-200/60 shadow-xs transition-all">
+          <i data-lucide="music-2" class="w-4 h-4 text-pink-400"></i>
+          <span id="ambient-sound-label" class="hidden sm:inline">Cozy Sounds</span>
+        </button>
+
+        <!-- Theme Color Selector Pill -->
+        <div class="flex items-center bg-white/70 p-1 rounded-2xl border border-white/80 shadow-xs">
+          <button class="theme-dot w-5 h-5 rounded-full bg-pink-300 border-2 border-white shadow-xs transition-transform active:scale-95" data-theme="theme-pink" title="Pink Blossom Glaze"></button>
+          <button class="theme-dot w-5 h-5 rounded-full bg-sky-300 border-2 border-white shadow-xs ml-1 transition-transform active:scale-95" data-theme="theme-blue" title="Arctic Frost Blue"></button>
+          <button class="theme-dot w-5 h-5 rounded-full bg-purple-300 border-2 border-white shadow-xs ml-1 transition-transform active:scale-95" data-theme="theme-lavender" title="Lavender Aurora"></button>
+        </div>
+
+        <!-- Quick Alarm Notification Trigger / Test -->
+        <button id="btn-sound-test" class="btn-aesthetic text-xs font-semibold px-2.5 py-2 rounded-2xl flex items-center gap-1 bg-pink-50 hover:bg-pink-100 text-pink-600 border border-pink-200 shadow-xs transition-all" title="Test sweet ice bell alarm sound">
+          <i data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs (Expanded with all requested modules) -->
+    <nav class="flex items-center justify-start gap-1.5 mb-5 overflow-x-auto pb-1.5 scrollbar-none">
+      <button class="nav-tab active-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="dashboard">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="history">
+        <i data-lucide="file-text" class="w-4 h-4 text-rose-400"></i>
+        <span>Medical History</span>
+        <span id="tab-history-badge" class="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-rose-100 text-rose-700 font-bold">5 Items</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="ai-reports">
+        <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+        <span>AI Report Explainer</span>
+        <span class="ml-1 text-[9px] px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold">AI ✨</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="period">
+        <i data-lucide="flower" class="w-4 h-4 text-pink-400"></i>
+        <span>Period Tracker</span>
+        <span id="tab-period-badge" class="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-pink-200 text-pink-800 font-bold">Day 14</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="medicine">
+        <i data-lucide="pill" class="w-4 h-4 text-sky-400"></i>
+        <span>Medicine & Alarms</span>
+        <span id="tab-medicine-badge" class="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-sky-200 text-sky-800 font-bold">0 Due</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="consult">
+        <i data-lucide="stethoscope" class="w-4 h-4 text-teal-500"></i>
+        <span>24/7 Doctor Consult</span>
+        <span class="ml-1 text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Available 🟢</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="pharmacy">
+        <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-500"></i>
+        <span>Pharmacy & Delivery</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="wellness">
+        <i data-lucide="heart" class="w-4 h-4 text-rose-400"></i>
+        <span>Care & Vibe</span>
+      </button>
+      <button class="nav-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm flex items-center gap-1.5 transition-all" data-tab="calendar">
+        <i data-lucide="calendar" class="w-4 h-4 text-purple-400"></i>
+        <span>Health Calendar</span>
+      </button>
+    </nav>
+
+    <!-- CONTENT SECTIONS -->
+
+    <!-- ========================================================================= -->
+    <!-- 1. DASHBOARD OVERVIEW -->
+    <!-- ========================================================================= -->
+    <main id="tab-content-dashboard" class="tab-pane active-pane space-y-6">
+
+      <!-- Hero Welcome Card with Mascot -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 relative overflow-hidden border border-white/80 shadow-soft bg-gradient-to-r from-white/95 via-pink-50/40 to-sky-50/50">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          
+          <div class="md:col-span-8 space-y-3 z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100/80 text-pink-600 text-xs font-bold border border-pink-200">
+              <span class="animate-bounce">🎀</span> Snowy's Clinical Wellness Intelligence
+            </div>
+            <h2 id="greeting-title" class="text-3xl sm:text-4xl font-display font-bold text-slate-800 tracking-tight leading-tight">
+              Hello Gorgeous Pookie! <span class="font-normal italic">Stay Cozy & Hydrated</span>
+            </h2>
+            <p id="greeting-quote" class="text-xs sm:text-sm text-slate-600 max-w-xl font-medium leading-relaxed">
+              "Snowy is wrapping you in a warm cloud today. Listen to your body, take your vitamins, and remember you're doing amazing! 🐻‍❄️💖"
+            </p>
+
+            <!-- Quick Glance Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div class="glass-card-subtle p-3 rounded-2xl border border-white/80 text-center">
+                <span class="text-[11px] text-slate-500 block font-medium">Cycle Status</span>
+                <span id="quick-cycle-status" class="text-xs sm:text-sm font-bold text-pink-600 sensitive-health-info">Day 14 (Ovulation)</span>
+              </div>
+              <div class="glass-card-subtle p-3 rounded-2xl border border-white/80 text-center">
+                <span class="text-[11px] text-slate-500 block font-medium">Next Period In</span>
+                <span id="quick-next-period" class="text-xs sm:text-sm font-bold text-rose-500 sensitive-health-info">14 Days</span>
+              </div>
+              <div class="glass-card-subtle p-3 rounded-2xl border border-white/80 text-center">
+                <span class="text-[11px] text-slate-500 block font-medium">Next Medicine</span>
+                <span id="quick-next-med" class="text-xs sm:text-sm font-bold text-sky-600">Vitamin D (1:00 PM)</span>
+              </div>
+              <div class="glass-card-subtle p-3 rounded-2xl border border-white/80 text-center">
+                <span class="text-[11px] text-slate-500 block font-medium">Hydration</span>
+                <span id="quick-water-status" class="text-xs sm:text-sm font-bold text-blue-500">4 / 8 Glasses</span>
+              </div>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-wrap items-center gap-2.5 pt-2">
+              <button onclick="switchTab('ai-reports')" class="btn-girly-primary px-3.5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="file-search" class="w-3.5 h-3.5"></i>
+                <span>Explain Medical Report with AI</span>
+              </button>
+              <button onclick="switchTab('consult')" class="btn-girly-secondary px-3.5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="video" class="w-3.5 h-3.5 text-pink-500"></i>
+                <span>Consult Doctor (24/7)</span>
+              </button>
+              <button onclick="switchTab('history')" class="btn-girly-secondary px-3.5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="clipboard-list" class="w-3.5 h-3.5 text-purple-500"></i>
+                <span>Medical History</span>
+              </button>
+              <button onclick="addWaterGlass()" class="btn-girly-tertiary px-3 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="glass-water" class="w-3.5 h-3.5 text-blue-400"></i>
+                <span>Drink Water 💧</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Snowy Mascot Big Art Showcase -->
+          <div class="md:col-span-4 flex justify-center items-center relative">
+            <div class="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+              <div class="absolute inset-0 bg-gradient-to-tr from-pink-200/40 via-sky-200/30 to-white/70 rounded-full blur-xl animate-pulse-slow"></div>
+              <div id="hero-bear-slot" class="w-full h-full relative z-10 filter drop-shadow-md bear-breathing"></div>
+              <!-- Speech Bubble -->
+              <div class="absolute -top-2 -right-1 bg-white/95 px-3 py-1 rounded-2xl rounded-bl-none shadow-md border border-pink-200 text-[11px] font-bold text-pink-700 animate-float flex items-center gap-1">
+                <span>Pookie's Health Guardian 🩺</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Quick Allergy & Safety Alert Banner (Feature H on Dashboard) -->
+      <div id="dashboard-allergy-banner" class="p-3.5 rounded-2xl bg-gradient-to-r from-rose-50/80 via-white to-pink-50/60 border border-rose-200 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="shield-alert" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-800">Allergy Safety Profile Active:</span>
+              <span id="dashboard-allergies-list" class="text-xs font-semibold text-rose-600">Penicillin & Amoxicillin • NSAIDs (Ibuprofen)</span>
+            </div>
+            <p class="text-[11px] text-slate-500">Every prescription & medicine added is cross-checked against your known adverse reactions.</p>
+          </div>
+        </div>
+        <button onclick="switchTab('history')" class="text-xs font-bold text-rose-600 hover:text-rose-700 underline flex items-center gap-1">
+          <span>Manage Allergies</span>
+          <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        </button>
+      </div>
+
+      <!-- Two Main Feature Highlights: Period Snapshot & Medicine Due Right Now -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Period & Cycle Spotlight Card -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-2xl bg-pink-100 flex items-center justify-center text-pink-600 shadow-inner">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-slate-800">Menstrual Cycle Tracker</h3>
+                <p class="text-xs text-slate-500">Estimated cycle phases & body signals</p>
+              </div>
+            </div>
+            <button onclick="switchTab('period')" class="text-xs font-bold text-pink-500 hover:text-pink-600 flex items-center gap-1">
+              Details <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Circular Phase Ring Preview & Phase Info -->
+          <div class="flex flex-col sm:flex-row items-center gap-6 my-2">
+            <div class="relative w-36 h-36 flex-shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="#FCE7F3" stroke-width="10" fill="transparent" />
+                <circle id="cycle-progress-ring" cx="60" cy="60" r="50" stroke="url(#pink-gradient)" stroke-width="10" stroke-linecap="round" fill="transparent" stroke-dasharray="314" stroke-dashoffset="157" class="transition-all duration-1000" />
+                <defs>
+                  <linearGradient id="pink-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FB7185" />
+                    <stop offset="100%" stop-color="#F43F5E" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Day</span>
+                <span id="cycle-center-day" class="text-2xl font-bold font-display text-pink-600 sensitive-health-info">14</span>
+                <span id="cycle-total-days" class="text-[10px] text-slate-500 font-medium">of 28 days</span>
+              </div>
+            </div>
+
+            <div class="space-y-2 flex-grow text-center sm:text-left">
+              <div class="inline-block px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-bold" id="current-phase-badge">
+                🌸 Ovulation Phase
+              </div>
+              <p id="current-phase-desc" class="text-xs text-slate-600 font-medium leading-relaxed">
+                Peak energy, high glow! Your estrogen peaks now. Perfect time for creative projects and socializing.
+              </p>
+              <div class="flex items-center justify-center sm:justify-start gap-4 text-xs font-semibold text-slate-500 pt-1">
+                <span class="flex items-center gap-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-400 inline-block"></span>
+                  Period: <b id="dashboard-period-date" class="text-slate-700 sensitive-health-info">In 14 days</b>
+                </span>
+                <span class="flex items-center gap-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span>
+                  Fertility: <b id="dashboard-fertility" class="text-slate-700 sensitive-health-info">High</b>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-pink-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500">Need cramp relief?</span>
+            <button onclick="playCrampAudio()" class="text-pink-600 font-bold hover:underline flex items-center gap-1">
+              <span>🧸 Cozy Heating Pad Soundscape</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Medicine Reminders & Due Next Card -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft flex flex-col justify-between relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-600 shadow-inner">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-lg text-slate-800">Today's Medicine Schedule</h3>
+                <p class="text-xs text-slate-500">Smart alarms, allergy cross-checks & adherence</p>
+              </div>
+            </div>
+            <button onclick="switchTab('medicine')" class="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+              Manage All <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Next Due Pill Alert Box -->
+          <div id="next-med-card" class="bg-gradient-to-r from-sky-50 to-blue-50/70 p-4 rounded-2xl border border-sky-200/70 flex items-center justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-white flex items-center justify-center text-sky-500 shadow-sm border border-sky-100">
+                <i data-lucide="pill" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 id="next-med-name" class="font-bold text-slate-800 text-sm">Multivitamin & Zinc</h4>
+                  <span id="next-med-time-tag" class="text-[10px] bg-sky-200 text-sky-800 font-bold px-2 py-0.5 rounded-full">1:00 PM</span>
+                </div>
+                <p id="next-med-instruction" class="text-xs text-slate-500 font-medium">Take 1 tablet with cold water after lunch</p>
+              </div>
+            </div>
+            <button id="btn-quick-take-med" class="px-3.5 py-1.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shadow-xs active:scale-95 transition-all flex items-center gap-1">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              <span>Take</span>
+            </button>
+          </div>
+
+          <!-- Mini Checklist of Today's Medicines -->
+          <div class="space-y-2 max-h-36 overflow-y-auto pr-1" id="dashboard-med-checklist">
+            <!-- Dynamically injected -->
+          </div>
+
+          <div class="pt-3 border-t border-sky-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500" id="med-completion-summary">2 of 3 doses taken (94% Adherence)</span>
+            <button onclick="openAddMedModal()" class="text-sky-600 font-bold hover:underline flex items-center gap-1">
+              <span>+ Add Prescription</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hydration & Daily Pookie Vibe Row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Hydration Tracker (Ice Bear Ice Water) -->
+        <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🧊</span>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">Frosty Hydration</h4>
+                <p class="text-[11px] text-slate-500">Goal: 2000 ml (8 glasses)</p>
+              </div>
+            </div>
+            <span id="hydration-count-badge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">4 / 8</span>
+          </div>
+
+          <!-- Glass Icons Grid -->
+          <div class="grid grid-cols-4 gap-2 my-3" id="water-cups-grid">
+            <!-- Dynamically populated 8 glass buttons -->
+          </div>
+
+          <div class="flex items-center justify-between gap-2 pt-2 border-t border-blue-100">
+            <button onclick="removeWaterGlass()" class="text-xs font-bold text-slate-400 hover:text-slate-600 px-2 py-1">
+              - 1 Glass
+            </button>
+            <button onclick="addWaterGlass()" class="px-3 py-1.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold flex items-center gap-1 shadow-xs transition-transform active:scale-95">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Drink Glass</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Ice Bear Mood & Pain Check-in -->
+        <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🧸</span>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">Today's Vibe Check</h4>
+                <p class="text-[11px] text-slate-500">How is pookie feeling?</p>
+              </div>
+            </div>
+            <span id="vibe-summary-badge" class="text-xs font-bold px-2 py-0.5 rounded-full bg-pink-100 text-pink-600">Cozy & Calm</span>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 my-2">
+            <button onclick="selectQuickMood('happy', '🌸 Happy Glow')" class="mood-btn p-2 rounded-2xl bg-white/70 hover:bg-pink-50 border border-white flex flex-col items-center gap-1 transition-all">
+              <span class="text-xl">🌸</span>
+              <span class="text-[10px] font-bold text-slate-600">Happy</span>
+            </button>
+            <button onclick="selectQuickMood('cozy', '🧸 Cozy Pookie')" class="mood-btn p-2 rounded-2xl bg-white/70 hover:bg-pink-50 border border-white flex flex-col items-center gap-1 transition-all">
+              <span class="text-xl">🧸</span>
+              <span class="text-[10px] font-bold text-slate-600">Cozy</span>
+            </button>
+            <button onclick="selectQuickMood('crampy', '🥺 Crampy Chills')" class="mood-btn p-2 rounded-2xl bg-white/70 hover:bg-pink-50 border border-white flex flex-col items-center gap-1 transition-all">
+              <span class="text-xl">🥺</span>
+              <span class="text-[10px] font-bold text-slate-600">Crampy</span>
+            </button>
+            <button onclick="selectQuickMood('tired', '😴 Sleepy Bear')" class="mood-btn p-2 rounded-2xl bg-white/70 hover:bg-pink-50 border border-white flex flex-col items-center gap-1 transition-all">
+              <span class="text-xl">😴</span>
+              <span class="text-[10px] font-bold text-slate-600">Sleepy</span>
+            </button>
+          </div>
+
+          <div class="text-[11px] text-slate-500 bg-white/50 p-2.5 rounded-xl border border-white/60">
+            <span class="font-bold text-slate-700">Bear Tip:</span> <span id="daily-mood-tip">Drink peppermint tea and wear warm socks to ease pelvic circulation.</span>
+          </div>
+        </div>
+
+        <!-- 24/7 Verified Doctor & Health Contacts -->
+        <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🩺</span>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">24/7 Doctor On-Call</h4>
+                <p class="text-[11px] text-slate-500">Verified clinical guidance</p>
+              </div>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Available
+            </span>
+          </div>
+
+          <div class="space-y-2 my-2 text-xs">
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/70 border border-white">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs">
+                  EF
+                </div>
+                <div>
+                  <span class="font-bold text-slate-800 block text-xs">Dr. Evelyn Frost, MD</span>
+                  <span class="text-[10px] text-slate-500">OB/GYN • Available Now</span>
+                </div>
+              </div>
+              <button onclick="startInstantDoctorConsult('doc_1')" class="px-2.5 py-1 rounded-xl bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold shadow-xs">
+                Call
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-100">
+            <button onclick="switchTab('consult')" class="text-pink-600 font-bold hover:underline flex items-center gap-1">
+              <span>View All 4 Specialists</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="openEmergencySosModal()" class="text-rose-600 font-bold hover:underline flex items-center gap-1">
+              <i data-lucide="ambulance" class="w-3.5 h-3.5"></i>
+              <span>SOS</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- 2. PERSONAL MEDICAL HISTORY SECTION (Feature A) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-history" class="tab-pane hidden space-y-6">
+
+      <!-- Header Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 border border-white/80 shadow-soft bg-gradient-to-r from-rose-50/50 via-white to-pink-50/40">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1.5 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold border border-rose-200">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>Private & Encrypted Health Record</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">Personal Medical History</h2>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-xl font-medium">
+              Maintain your conditions, clinical consultation summaries, past prescriptions, allergies, and uploaded test results in one safe, chronological profile.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2.5 flex-shrink-0">
+            <button onclick="openAddMedicalRecordModal()" class="btn-girly-primary px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-md">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>Add Medical Entry</span>
+            </button>
+            <button onclick="exportMedicalSummary()" class="btn-girly-secondary px-3.5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-xs" title="Export for Doctor Appointment">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">Export Summary</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Category Sub-Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-b border-pink-100">
+        <button onclick="filterHistoryTab('all')" class="history-sub-tab active px-4 py-2 rounded-2xl text-xs font-bold text-slate-700 bg-white shadow-xs border border-pink-200">
+          All Entries
+        </button>
+        <button onclick="filterHistoryTab('conditions')" class="history-sub-tab px-4 py-2 rounded-2xl text-xs font-bold text-slate-500 hover:text-slate-800">
+          Medical Conditions (3)
+        </button>
+        <button onclick="filterHistoryTab('records')" class="history-sub-tab px-4 py-2 rounded-2xl text-xs font-bold text-slate-500 hover:text-slate-800">
+          Consultations & Tests (3)
+        </button>
+        <button onclick="filterHistoryTab('medications')" class="history-sub-tab px-4 py-2 rounded-2xl text-xs font-bold text-slate-500 hover:text-slate-800">
+          Previous Medications (2)
+        </button>
+        <button onclick="filterHistoryTab('allergies')" class="history-sub-tab px-4 py-2 rounded-2xl text-xs font-bold text-rose-600 hover:text-rose-800">
+          Allergies & Reactions (3) ⚠️
+        </button>
+      </div>
+
+      <!-- History Timeline & Cards Container -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Main Timeline Column (Left 2 cols) -->
+        <div class="lg:col-span-2 space-y-4" id="history-timeline-container">
+          <!-- Dynamically populated timeline items -->
+        </div>
+
+        <!-- Sidebar Summary Cards (Right 1 col) -->
+        <div class="space-y-6">
+
+          <!-- Allergies Critical Card (Feature H) -->
+          <div class="glass-panel rounded-3xl p-5 border border-rose-200 shadow-soft bg-gradient-to-br from-rose-50/70 via-white to-pink-50/40">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
+                  <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-800 text-sm">Recorded Allergies</h4>
+                  <p class="text-[10px] text-slate-500">Auto-checked against medicines</p>
+                </div>
+              </div>
+              <button onclick="openAddMedicalRecordModal('allergies')" class="text-xs font-bold text-rose-600 hover:underline">+ Add</button>
+            </div>
+
+            <div class="space-y-2.5" id="history-allergies-list">
+              <!-- Dynamically populated allergies -->
+            </div>
+
+            <p class="text-[10px] text-slate-400 mt-3 italic">
+              *Never silently ignored. Always verified by clinical safeguards.
+            </p>
+          </div>
+
+          <!-- Quick Health Profile Card -->
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-3 text-xs">
+            <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <i data-lucide="user-check" class="w-4 h-4 text-pink-500"></i>
+              <span>Patient Profile Overview</span>
+            </h4>
+            <div class="space-y-1.5 text-slate-600">
+              <div class="flex justify-between py-1 border-b border-pink-50">
+                <span class="text-slate-400">Blood Group:</span>
+                <span class="font-bold text-slate-700">O Positive (O+)</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-pink-50">
+                <span class="text-slate-400">Primary Clinician:</span>
+                <span class="font-bold text-slate-700">Dr. Evelyn Frost, MD</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-pink-50">
+                <span class="text-slate-400">Active Prescriptions:</span>
+                <span class="font-bold text-slate-700">3 Prescriptions</span>
+              </div>
+              <div class="flex justify-between py-1">
+                <span class="text-slate-400">Data Consent Status:</span>
+                <span class="font-bold text-emerald-600 flex items-center gap-1">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Explicit Consent Granted
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 3. AI MEDICAL REPORT EXPLAINER & PRESCRIPTION VERIFIER (Feature B & C) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-ai-reports" class="tab-pane hidden space-y-6">
+
+      <!-- Header Card with AI Snowy Mascot -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 border border-white/80 shadow-soft bg-gradient-to-r from-purple-50/60 via-white to-pink-50/40">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center sm:text-left">
+            <div class="flex items-center gap-2 flex-wrap">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-bold border border-purple-200">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span>AI Clinical Language Simplifier</span>
+              </div>
+              <div id="ai-agent-backend-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="ai-agent-status-label">NVIDIA MiniMax M3.1 Flash: Active</span>
+              </div>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">AI Medical Report Explainer</h2>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-xl font-medium leading-relaxed">
+              Upload blood tests, hormone panels, or imaging reports. Our AI breaks down complex medical jargon into clear, calm English, explains flagged values, and prepares questions for your doctor.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <div id="ai-bear-slot" class="w-24 h-24 hidden sm:block"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Two Column Grid: Upload & Analysis Area vs Interactive Explainer Chat -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Column 1: Report Input & Presets (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-4">
+            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <i data-lucide="upload-cloud" class="w-4 h-4 text-purple-500"></i>
+              <span>Select or Paste Medical Report</span>
+            </h3>
+
+            <!-- Quick Sample Test Buttons -->
+            <div class="space-y-2">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Try a Sample Lab Report:</span>
+              <div class="grid grid-cols-1 gap-2">
+                <button onclick="loadSampleReport('cbc')" class="p-2.5 rounded-2xl bg-white/80 hover:bg-purple-50/70 border border-purple-100 text-left text-xs transition-all flex items-center justify-between">
+                  <div>
+                    <b class="text-slate-800 block">🩸 CBC & Iron Profile (Anemia & Low Ferritin)</b>
+                    <span class="text-[10px] text-slate-500">Hemoglobin 10.4, Ferritin 14 ng/mL, RBC 4.1</span>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400"></i>
+                </button>
+                <button onclick="loadSampleReport('thyroid')" class="p-2.5 rounded-2xl bg-white/80 hover:bg-purple-50/70 border border-purple-100 text-left text-xs transition-all flex items-center justify-between">
+                  <div>
+                    <b class="text-slate-800 block">🦋 Thyroid & Hormone Screen (TSH / Free T4)</b>
+                    <span class="text-[10px] text-slate-500">TSH 4.6 mIU/L (Mild elevation), Free T4 1.1</span>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400"></i>
+                </button>
+                <button onclick="loadSampleReport('metabolic')" class="p-2.5 rounded-2xl bg-white/80 hover:bg-purple-50/70 border border-purple-100 text-left text-xs transition-all flex items-center justify-between">
+                  <div>
+                    <b class="text-slate-800 block">🥑 Lipid & Metabolic Panel</b>
+                    <span class="text-[10px] text-slate-500">Fasting Glucose 92 mg/dL, Total Cholesterol 185</span>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-purple-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Drag & Drop / File Input Simulation -->
+            <div class="border-2 border-dashed border-pink-200/80 rounded-2xl p-4 text-center space-y-2 hover:border-pink-400 transition-all cursor-pointer bg-white/40" onclick="simulateFileUpload()">
+              <input type="file" id="report-file-input" class="hidden" accept=".pdf,.png,.jpg,.jpeg" onchange="handleFileChosen(event)">
+              <div class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-500 flex items-center justify-center mx-auto">
+                <i data-lucide="file-up" class="w-5 h-5"></i>
+              </div>
+              <div class="text-xs font-bold text-slate-700">Click to upload prescription or lab report (PDF/Image)</div>
+              <p class="text-[10px] text-slate-400">Processes text & medicines with NVIDIA MiniMax M3.1 Flash</p>
+            </div>
+
+            <!-- Uploaded Image / File Preview Box (Hidden until selected) -->
+            <div id="uploaded-file-preview" class="p-3 rounded-2xl bg-purple-50/70 border border-purple-200 hidden space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-800 flex items-center gap-1.5 truncate max-w-[200px]">
+                  <i data-lucide="image" class="w-4 h-4 text-purple-600"></i>
+                  <span id="preview-file-name">Prescription_Rx_Scan.jpg</span>
+                </span>
+                <button type="button" onclick="clearUploadedFile(event)" class="text-rose-500 font-bold hover:underline text-[10px]">Remove</button>
+              </div>
+              <div id="image-thumbnail-container" class="max-h-32 overflow-hidden rounded-xl border border-purple-100 bg-white flex items-center justify-center">
+                <!-- Thumbnail preview -->
+              </div>
+            </div>
+
+            <!-- Text Paste Area -->
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Or Paste Report Findings Text:</label>
+              <textarea id="ai-report-text-input" rows="4" placeholder="e.g. Hemoglobin 10.4 g/dL (Ref: 12.0-15.5), Ferritin 14 ng/mL (Ref: 20-200)..." class="w-full p-3 rounded-2xl border border-slate-200 text-xs font-mono focus:ring-2 focus:ring-purple-300 outline-none"></textarea>
+            </div>
+
+            <button onclick="analyzeCurrentReport()" id="btn-analyze-report" class="btn-girly-primary w-full py-3 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 shadow-md">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Analyze & Explain Report</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Column 2: Structured AI Explanation & Prescription Prompt (7 cols) -->
+        <div class="lg:col-span-7 space-y-4">
+
+          <!-- Output Container -->
+          <div id="ai-analysis-output-container" class="space-y-4">
+            
+            <!-- Default Placeholder State -->
+            <div id="ai-empty-state" class="glass-panel rounded-3xl p-8 border border-white/80 shadow-soft text-center space-y-3">
+              <div class="w-16 h-16 rounded-3xl bg-purple-100 text-purple-600 flex items-center justify-center mx-auto">
+                <i data-lucide="file-search" class="w-8 h-8"></i>
+              </div>
+              <h4 class="font-display font-bold text-lg text-slate-800">Your AI Analysis Will Appear Here</h4>
+              <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                Select one of the sample reports on the left or upload your own lab results. Snowy will translate complex clinical parameters into gentle, easy-to-understand insights.
+              </p>
+            </div>
+
+            <!-- Dynamic AI Result Card (Hidden until analysis runs) -->
+            <div id="ai-result-card" class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4 hidden">
+              <!-- Dynamically populated analysis -->
+            </div>
+
+            <!-- PRESCRIPTION VERIFICATION PROMPT CARD (Feature C) -->
+            <div id="prescription-verification-card" class="glass-panel rounded-3xl p-6 border-2 border-pink-200 shadow-soft bg-gradient-to-r from-pink-50/80 via-white to-rose-50/70 space-y-4 hidden">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-display font-bold text-base text-slate-800">Prescription Verification & Treatment Guidance</h4>
+                  <p class="text-xs text-slate-500">Under healthcare safety regulations, prescription drugs require clinical authorization.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/90 border border-pink-200 text-xs space-y-3">
+                <p class="font-bold text-slate-800 text-sm">
+                  “Do you have a doctor’s prescription for this condition?”
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3">
+                  <button onclick="handlePrescriptionAnswer(true)" class="btn-girly-primary px-5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    <span>Yes, I have a doctor's prescription</span>
+                  </button>
+                  <button onclick="handlePrescriptionAnswer(false)" class="btn-girly-secondary px-5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                    <span>No, I don't have a prescription yet</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Answer Outcome Container -->
+              <div id="prescription-answer-outcome" class="text-xs space-y-3 hidden">
+                <!-- Injected based on YES or NO -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Follow-Up Chat Box -->
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-3">
+            <h4 class="font-bold text-slate-800 text-xs flex items-center gap-2">
+              <i data-lucide="message-square-heart" class="w-4 h-4 text-pink-500"></i>
+              <span>Ask Snowy Follow-Up Health Questions</span>
+            </h4>
+
+            <div id="ai-chat-thread" class="space-y-2.5 max-h-52 overflow-y-auto pr-1 text-xs">
+              <div class="chat-bubble-ai p-3 max-w-[85%] text-slate-700 leading-relaxed">
+                "Hello, sweet pookie! I'm here to explain any medical terms or lab values. What questions do you have about your body today? 🌸"
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-1">
+              <input type="text" id="ai-chat-input" placeholder="e.g. Why is ferritin important for energy?" class="flex-grow px-3.5 py-2 rounded-2xl border border-slate-200 text-xs bg-white outline-none focus:ring-2 focus:ring-pink-300" onkeydown="if(event.key==='Enter') sendAiChatMessage()">
+              <button onclick="sendAiChatMessage()" class="btn-girly-primary p-2.5 rounded-2xl text-white shadow-xs">
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 4. 24/7 DOCTOR CONSULTATION (Feature G) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-consult" class="tab-pane hidden space-y-6">
+
+      <!-- Header Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 border border-white/80 shadow-soft bg-gradient-to-r from-teal-50/50 via-white to-pink-50/40">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1.5 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold border border-teal-200">
+              <i data-lucide="badge-check" class="w-3.5 h-3.5 text-teal-600"></i>
+              <span>Board-Certified Medical Specialists</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">24/7 Doctor Consultation</h2>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-xl font-medium">
+              Connect with verified female health specialists anytime. Ideal for sensitive concerns where clinical human judgment is essential. Secure, private, and stigma-free.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="px-3 py-1.5 rounded-2xl bg-white border border-teal-200 text-teal-700 text-xs font-bold flex items-center gap-1.5 shadow-xs">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>Telehealth WebRTC Ready</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor Cards Directory -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="doctor-directory-grid">
+        <!-- Dynamically injected doctor cards -->
+      </div>
+
+      <!-- Telehealth Trust & Disclaimer Card -->
+      <div class="p-4 rounded-2xl bg-white/70 border border-white text-xs text-slate-500 text-center max-w-2xl mx-auto space-y-1">
+        <p class="font-bold text-slate-700">Clinical Governance Notice</p>
+        <p>All doctors are independently verified physicians licensed in women's health and reproductive medicine. For acute life-threatening situations, use our 1-Tap Emergency SOS.</p>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 5. PHARMACY & PRESCRIPTION MEDICINE ORDERING (Feature C & H) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-pharmacy" class="tab-pane hidden space-y-6">
+
+      <!-- Header Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 border border-white/80 shadow-soft bg-gradient-to-r from-amber-50/50 via-white to-pink-50/40">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1.5 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>Verified Pharmacy & Express Delivery</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">Pharmacy & Prescription Delivery</h2>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-xl font-medium">
+              Order your clinician-authorized medications in under 5 minutes. Every order is automatically cross-referenced against your allergy profile before checkout.
+            </p>
+          </div>
+
+          <button onclick="openPharmacyCheckoutModal()" class="btn-girly-primary px-5 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1.5 shadow-md">
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span>View Active Order</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Verified Prescriptions List -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Prescribed Items Column (2 cols) -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <i data-lucide="file-check" class="w-4 h-4 text-emerald-500"></i>
+              <span>Prescriptions Ready to Order (Verified by Dr. Evelyn Frost)</span>
+            </h3>
+            <span class="text-xs text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              Rx Verified ✓
+            </span>
+          </div>
+
+          <div class="space-y-3" id="pharmacy-items-list">
+            <!-- Dynamically populated prescription medicines -->
+          </div>
+        </div>
+
+        <!-- Order Summary & Express Checkout Card (1 col) -->
+        <div class="space-y-6">
+
+          <!-- 5-Minute Checkout Card -->
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-4 text-xs">
+            <h4 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+              <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+              <span>Express 5-Minute Checkout</span>
+            </h4>
+
+            <!-- Delivery Address -->
+            <div>
+              <span class="text-slate-500 font-medium block mb-1">Delivery Address:</span>
+              <div class="p-2.5 rounded-xl bg-white/80 border border-slate-200 text-slate-700 font-medium">
+                742 Evergreen Terrace, Apt 4B, San Francisco, CA
+              </div>
+            </div>
+
+            <!-- Delivery Speed -->
+            <div>
+              <span class="text-slate-500 font-medium block mb-1">Delivery Option:</span>
+              <div class="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200 text-amber-900 font-bold flex justify-between items-center">
+                <span>⚡ Express Courier (Within 2 Hours)</span>
+                <span>FREE</span>
+              </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+              <div class="flex justify-between text-slate-500">
+                <span>Subtotal:</span>
+                <span class="font-bold text-slate-700">$29.20</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>Clinical Packaging:</span>
+                <span class="font-bold text-slate-700">$0.00</span>
+              </div>
+              <div class="flex justify-between text-sm font-bold text-slate-800 pt-1 border-t border-slate-100">
+                <span>Total:</span>
+                <span class="text-rose-600">$29.20</span>
+              </div>
+            </div>
+
+            <button onclick="openPharmacyCheckoutModal()" class="btn-girly-primary w-full py-3 rounded-2xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md">
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+              <span>Proceed to 5-Min Checkout</span>
+            </button>
+          </div>
+
+          <!-- Live Order Tracker -->
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-3 text-xs" id="active-pharmacy-order-tracker">
+            <!-- Dynamically populated order tracking status -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 6. PERIOD & CYCLE TRACKER SECTION (Upgraded Feature E) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-period" class="tab-pane hidden space-y-6">
+
+      <!-- Period Header Card with Interactive Moon/Cycle Dial -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/80 shadow-soft">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+          
+          <!-- Big Cycle Wheel Visualizer -->
+          <div class="relative w-72 h-72 sm:w-80 sm:h-80 flex-shrink-0 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-300/30 via-rose-200/20 to-sky-200/30 blur-2xl"></div>
+            
+            <!-- SVG Ring with Phase Segments -->
+            <svg class="w-full h-full -rotate-90 relative z-10" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="80" stroke="#FCE7F3" stroke-width="18" fill="transparent" />
+              <circle id="cycle-wheel-active" cx="100" cy="100" r="80" stroke="url(#period-wheel-grad)" stroke-width="18" stroke-linecap="round" fill="transparent" stroke-dasharray="502.6" stroke-dashoffset="250" class="transition-all duration-1000" />
+              
+              <defs>
+                <linearGradient id="period-wheel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FB7185" />
+                  <stop offset="50%" stop-color="#F43F5E" />
+                  <stop offset="100%" stop-color="#C084FC" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <!-- Mascot in the Center of the Wheel -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center z-20 pointer-events-none p-4">
+              <div id="cycle-center-bear-slot" class="w-20 h-20 mb-1"></div>
+              <span class="text-xs font-bold text-pink-600 uppercase tracking-widest">Cycle Day</span>
+              <span id="cycle-detail-day-num" class="text-4xl font-display font-extrabold text-slate-800 sensitive-health-info">14</span>
+              <span id="cycle-detail-phase-name" class="text-xs font-bold text-pink-500 bg-pink-100 px-2.5 py-0.5 rounded-full mt-1">Ovulation Window</span>
+            </div>
+          </div>
+
+          <!-- Cycle Breakdown & Controls -->
+          <div class="space-y-4 max-w-xl w-full">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs uppercase font-bold tracking-wider text-pink-500">Pookie's Cycle Forecast</span>
+                <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">Cycle & Ovulation Hub</h2>
+              </div>
+              <button onclick="openCycleSettingsModal()" class="btn-aesthetic text-xs font-bold px-3 py-2 rounded-2xl bg-white/70 border border-pink-200 text-slate-700 hover:bg-white flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="settings" class="w-4 h-4 text-pink-500"></i>
+                <span>Cycle Settings</span>
+              </button>
+            </div>
+
+            <!-- Cycle Stages Timeline Bar -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-bold text-slate-600">
+                <span class="text-rose-600">🩸 Menstrual (1-5)</span>
+                <span class="text-sky-600">🌱 Follicular (6-12)</span>
+                <span class="text-amber-600">✨ Ovulation (13-16)</span>
+                <span class="text-purple-600">🌙 Luteal (17-28)</span>
+              </div>
+              <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden flex shadow-inner">
+                <div class="h-full bg-rose-400 w-[18%]" title="Menstrual Phase"></div>
+                <div class="h-full bg-sky-300 w-[25%]" title="Follicular Phase"></div>
+                <div class="h-full bg-amber-300 w-[15%]" title="Ovulation Window"></div>
+                <div class="h-full bg-purple-300 w-[42%]" title="Luteal Phase"></div>
+              </div>
+            </div>
+
+            <!-- Phase Medical Advice Card -->
+            <div class="bg-gradient-to-r from-pink-50 to-rose-50/60 p-4 rounded-2xl border border-pink-200/70 space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="text-lg">🐻‍❄️🩺</span>
+                <h4 class="font-bold text-slate-800 text-sm" id="phase-advice-title">Ovulation Window: You are glowing!</h4>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed font-medium" id="phase-advice-body">
+                During ovulation, your estrogen peaks, bringing high confidence, peak metabolism, and vibrant energy. Stay hydrated, eat healthy antioxidant-rich berries, and prepare for the upcoming luteal shift.
+              </p>
+              <div class="flex flex-wrap gap-2 pt-1 text-[11px] font-semibold">
+                <span class="bg-white/80 px-2.5 py-1 rounded-xl text-rose-700 border border-pink-100">Fertility: <b id="detail-fertility-level" class="sensitive-health-info">High</b></span>
+                <span class="bg-white/80 px-2.5 py-1 rounded-xl text-slate-700 border border-pink-100">Next Period: <b id="detail-next-period-days" class="sensitive-health-info">14 Days away</b></span>
+                <span class="bg-white/80 px-2.5 py-1 rounded-xl text-purple-700 border border-purple-100">Avg Cycle: <b id="detail-avg-cycle">28 Days</b></span>
+              </div>
+            </div>
+
+            <!-- Action: Log Today's Status -->
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button onclick="openLogPeriodModal()" class="btn-girly-primary px-5 py-3 rounded-2xl text-xs font-bold flex items-center gap-2 shadow-md">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                <span>Log Flow, Pain & Symptoms for Today</span>
+              </button>
+              <button onclick="quickTogglePeriodToday()" id="btn-toggle-period-today" class="btn-girly-secondary px-4 py-3 rounded-2xl text-xs font-bold flex items-center gap-2 shadow-xs">
+                <i data-lucide="droplet" class="w-4 h-4 text-rose-500"></i>
+                <span id="btn-toggle-period-label">Mark Period Started Today</span>
+              </button>
+            </div>
+
+            <!-- Cycle Prediction Estimation Disclaimer -->
+            <p class="text-[10px] text-slate-400 italic">
+              *All cycle predictions are estimates calculated from your historical data. Cycle variations are normal.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Flow & Symptoms Daily Log Dashboard -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Today's Flow & Cramps Card -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center text-rose-500 shadow-inner">
+              <i data-lucide="droplet" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">Flow Intensity Today</h3>
+              <p class="text-xs text-slate-500">Record menstrual discharge</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 text-center" id="flow-intensity-selector">
+            <button onclick="setFlowLevel('none', this)" class="flow-btn active p-2.5 rounded-2xl bg-white border border-pink-200 text-xs font-bold text-slate-600 hover:border-pink-400 transition-all">
+              <span class="block text-base mb-1">⚪</span>
+              <span>None</span>
+            </button>
+            <button onclick="setFlowLevel('light', this)" class="flow-btn p-2.5 rounded-2xl bg-white border border-pink-200 text-xs font-bold text-slate-600 hover:border-pink-400 transition-all">
+              <span class="block text-base mb-1">🌸</span>
+              <span>Light</span>
+            </button>
+            <button onclick="setFlowLevel('medium', this)" class="flow-btn p-2.5 rounded-2xl bg-white border border-pink-200 text-xs font-bold text-slate-600 hover:border-pink-400 transition-all">
+              <span class="block text-base mb-1">🌺</span>
+              <span>Medium</span>
+            </button>
+            <button onclick="setFlowLevel('heavy', this)" class="flow-btn p-2.5 rounded-2xl bg-white border border-pink-200 text-xs font-bold text-slate-600 hover:border-pink-400 transition-all">
+              <span class="block text-base mb-1">🌹</span>
+              <span>Heavy</span>
+            </button>
+          </div>
+
+          <!-- Cramps Pain Scale Slider -->
+          <div class="space-y-2 pt-2 border-t border-rose-100">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-700">Cramp / Pain Level:</span>
+              <span id="pain-level-text" class="font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg">Level 0 (No Pain ✨)</span>
+            </div>
+            <input type="range" id="pain-range-slider" min="0" max="4" value="0" step="1" oninput="updatePainSlider(this.value)" class="w-full accent-rose-500 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-400 font-medium">
+              <span>0: Peaceful</span>
+              <span>1: Mild</span>
+              <span>2: Moderate</span>
+              <span>3: Strong</span>
+              <span>4: Severe</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Symptoms & Cravings Tags -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-purple-100 flex items-center justify-center text-purple-600 shadow-inner">
+              <i data-lucide="sparkle" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">Symptoms & Body Signals</h3>
+              <p class="text-xs text-slate-500">Tap to toggle today's symptoms</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2" id="symptom-tag-container">
+            <!-- Dynamically populated symptom pills -->
+          </div>
+        </div>
+
+        <!-- Period Reminder Settings & Self-Care Checklist -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-pink-100 flex items-center justify-center text-pink-600 shadow-inner">
+              <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">Period Care Kit Checklist</h3>
+              <p class="text-xs text-slate-500">Pookie's comfort essentials</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2.5 p-2 rounded-xl bg-white/60 border border-white cursor-pointer hover:bg-pink-50/50">
+              <input type="checkbox" id="check-pad" class="accent-pink-500 rounded">
+              <span class="font-medium text-slate-700">Stocked with pads / tampons / cup</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 rounded-xl bg-white/60 border border-white cursor-pointer hover:bg-pink-50/50">
+              <input type="checkbox" id="check-heat" class="accent-pink-500 rounded">
+              <span class="font-medium text-slate-700">Heating pad or hot water bottle ready</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 rounded-xl bg-white/60 border border-white cursor-pointer hover:bg-pink-50/50">
+              <input type="checkbox" id="check-tea" class="accent-pink-500 rounded">
+              <span class="font-medium text-slate-700">Raspberry leaf / chamomile herbal tea</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 rounded-xl bg-white/60 border border-white cursor-pointer hover:bg-pink-50/50">
+              <input type="checkbox" id="check-choco" class="accent-pink-500 rounded">
+              <span class="font-medium text-slate-700">Dark chocolate & cozy plushie</span>
+            </label>
+          </div>
+
+          <div class="pt-2 border-t border-pink-100">
+            <button onclick="requestNotificationPermission()" class="w-full py-2 px-3 rounded-xl bg-pink-100 hover:bg-pink-200 text-pink-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+              <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+              <span>Enable Discreet Period Notifications</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 7. MEDICINE ALARM & REMINDER SECTION (Upgraded Feature D & H) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-medicine" class="tab-pane hidden space-y-6">
+
+      <!-- Medicine Alarm Control Hero -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/80 shadow-soft bg-gradient-to-r from-sky-50/60 via-white to-pink-50/40">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-bold border border-sky-200">
+              <i data-lucide="alarm-clock" class="w-3.5 h-3.5"></i>
+              <span>Real-Time Medicine Alarm Engine Active</span>
+            </div>
+            <h2 class="text-3xl font-display font-bold text-slate-800">Snowy's Apothecary & Pillbox</h2>
+            <p class="text-sm text-slate-600 max-w-lg font-medium">
+              Never miss your birth control, iron, vitamins, or prescriptions. Snowy rings sweet crystal chimes and alerts you right on time with automated allergy cross-checks!
+            </p>
+          </div>
+
+          <!-- Add Medicine Button & Mascot -->
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <div id="med-bear-slot" class="w-24 h-24 hidden sm:block"></div>
+            <button onclick="openAddMedModal()" class="btn-girly-primary px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg">
+              <i data-lucide="plus-circle" class="w-5 h-5"></i>
+              <span>Add New Medicine</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medicine Schedule Tabs (Today's Doses vs Adherence Tracker vs Refill Inventory) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Column 1 & 2: Active Medications List -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-xl text-slate-800 flex items-center gap-2">
+              <span>Today's Medicine Schedule</span>
+              <span id="med-count-pill" class="text-xs bg-sky-100 text-sky-700 font-bold px-2.5 py-0.5 rounded-full">3 Prescriptions</span>
+            </h3>
+            <span class="text-xs text-slate-400 font-medium">Checked times trigger audio alarm</span>
+          </div>
+
+          <!-- List of Medications Container -->
+          <div id="medication-cards-list" class="space-y-3">
+            <!-- Dynamically populated medication cards -->
+          </div>
+        </div>
+
+        <!-- Column 3: Adherence History & Pill Refill Tracker -->
+        <div class="space-y-6">
+
+          <!-- Adherence History Card (Feature D) -->
+          <div class="glass-panel rounded-3xl p-5 border border-white/80 shadow-soft space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
+                <span>Adherence & Consistency</span>
+              </h4>
+              <span class="font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">94% Adherence</span>
+            </div>
+
+            <p class="text-slate-500">You took 58 of 62 doses on time this month. Excellent consistency!</p>
+
+            <!-- 7-day adherence streak bar -->
+            <div class="flex items-center justify-between gap-1 pt-1">
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Mon</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Tue</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Wed</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Thu</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Fri</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px] mx-auto">✓</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Sat</span>
+              </div>
+              <div class="text-center">
+                <div class="w-7 h-7 rounded-full bg-sky-100 text-sky-700 font-bold flex items-center justify-center text-[10px] mx-auto">⏰</div>
+                <span class="text-[9px] text-slate-400 font-semibold mt-1 block">Today</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pill Inventory & Refill Warnings -->
+          <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                  <i data-lucide="package" class="w-4 h-4"></i>
+                </div>
+                <h4 class="font-bold text-slate-800 text-sm">Refill & Supply Alerts</h4>
+              </div>
+              <span class="text-[10px] bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full font-bold">Inventory</span>
+            </div>
+
+            <div id="refill-inventory-list" class="space-y-3">
+              <!-- Dynamically populated progress bars of pill supplies -->
+            </div>
+          </div>
+
+          <!-- Alarm Sound Settings Card -->
+          <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center font-bold">
+                <i data-lucide="volume-2" class="w-4 h-4"></i>
+              </div>
+              <h4 class="font-bold text-slate-800 text-sm">Alarm Sound & Chimes</h4>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-600 font-medium">Chime Melody:</span>
+                <select id="alarm-sound-choice" class="bg-white/80 border border-pink-200 rounded-xl px-2.5 py-1 text-slate-700 font-bold text-xs focus:ring-2 focus:ring-pink-300 outline-none">
+                  <option value="crystal-harp">Celestial Crystal Harp 🌟</option>
+                  <option value="sweet-bell">Sweet Ice Bells 🔔</option>
+                  <option value="soft-marimba">Soft Cozy Marimba 🎶</option>
+                  <option value="fairy-dust">Sparkle Fairy Chime ✨</option>
+                </select>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <span class="text-slate-600 font-medium">Alarm Volume:</span>
+                <input type="range" id="alarm-volume-slider" min="0" max="100" value="80" class="w-28 accent-pink-500">
+              </div>
+
+              <button onclick="testAlarmChime()" class="w-full py-2 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold border border-pink-200 flex items-center justify-center gap-1.5 transition-all">
+                <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                <span>Preview Medicine Chime</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 8. CARE & VIBE SANCTUARY (Existing Audio, Affirmations, Self-Care) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-wellness" class="tab-pane hidden space-y-6">
+
+      <!-- Cozy Soundscape & White Noise Generator -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/80 shadow-soft">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 max-w-xl text-center lg:text-left">
+            <span class="text-xs uppercase font-bold tracking-wider text-pink-500">Relief & Relaxation</span>
+            <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-800">Snowy's Cozy Ambient Sanctuary</h2>
+            <p class="text-sm text-slate-600 font-medium">
+              Calm your menstrual cramps, relieve tension headaches, or drift off to sleep with real-time generative soothing audio. Built with pure browser sound synthesis!
+            </p>
+          </div>
+
+          <!-- Soundscape Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+            <button onclick="toggleAmbientTrack('snowfall')" id="track-snowfall" class="sound-track-card p-4 rounded-2xl bg-white/70 hover:bg-white border border-white shadow-xs flex flex-col items-center gap-2 text-center transition-all">
+              <span class="text-2xl">❄️</span>
+              <span class="text-xs font-bold text-slate-800">Frosty Snowfall</span>
+              <span class="text-[10px] text-slate-500">Gentle pink noise</span>
+            </button>
+            <button onclick="toggleAmbientTrack('cramp')" id="track-cramp" class="sound-track-card p-4 rounded-2xl bg-white/70 hover:bg-white border border-white shadow-xs flex flex-col items-center gap-2 text-center transition-all">
+              <span class="text-2xl">🔥</span>
+              <span class="text-xs font-bold text-slate-800">Cozy Warmth</span>
+              <span class="text-[10px] text-slate-500">Warm sub-harmonic tones</span>
+            </button>
+            <button onclick="toggleAmbientTrack('harp')" id="track-harp" class="sound-track-card p-4 rounded-2xl bg-white/70 hover:bg-white border border-white shadow-xs flex flex-col items-center gap-2 text-center transition-all">
+              <span class="text-2xl">✨</span>
+              <span class="text-xs font-bold text-slate-800">Angelic Harp</span>
+              <span class="text-[10px] text-slate-500">Dreamy bedtime bell</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Self-Care Tips & Affirmations -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Pookie's Affirmation Jar -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">💌</span>
+              <h3 class="font-display font-bold text-lg text-slate-800">Daily Love Note From Snowy</h3>
+            </div>
+            <button onclick="generateNewAffirmation()" class="text-xs font-bold text-pink-500 hover:text-pink-600 flex items-center gap-1">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>New Note</span>
+            </button>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-pink-50 via-white to-rose-50 border border-pink-200/60 my-auto text-center space-y-3">
+            <div id="wellness-bear-slot" class="w-16 h-16 mx-auto"></div>
+            <p id="affirmation-text" class="text-base font-display font-semibold italic text-slate-700 leading-relaxed">
+              "Your body does miraculous things every single second. Give yourself the gentle grace and sweet rest you deserve, sweet pookie."
+            </p>
+            <span class="text-xs text-pink-500 font-bold block">— Snowy The Ice Bear 🐾</span>
+          </div>
+
+          <div class="pt-4 text-center">
+            <button onclick="copyAffirmation()" class="text-xs font-bold text-slate-500 hover:text-slate-700 flex items-center justify-center gap-1 mx-auto">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>Copy Note to Clipboard</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Girly Nutrition & Cramp Relief Guide -->
+        <div class="glass-panel rounded-3xl p-6 border border-white/80 shadow-soft space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🥑</span>
+            <h3 class="font-display font-bold text-lg text-slate-800">Hormone Health & Food Guide</h3>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div class="p-3 rounded-2xl bg-white/70 border border-white flex items-start gap-3">
+              <span class="text-lg">🍫</span>
+              <div>
+                <b class="text-slate-800 block">Dark Chocolate (>70%) & Magnesium</b>
+                <span class="text-slate-600">Relaxes smooth uterine muscles to significantly reduce period cramping!</span>
+              </div>
+            </div>
+            <div class="p-3 rounded-2xl bg-white/70 border border-white flex items-start gap-3">
+              <span class="text-lg">🍵</span>
+              <div>
+                <b class="text-slate-800 block">Ginger & Peppermint Infusion</b>
+                <span class="text-slate-600">Calms nausea, digestive bloat, and hormonal headaches naturally.</span>
+              </div>
+            </div>
+            <div class="p-3 rounded-2xl bg-white/70 border border-white flex items-start gap-3">
+              <span class="text-lg">🥑</span>
+              <div>
+                <b class="text-slate-800 block">Healthy Omega-3 Fats (Avocado & Salmon)</b>
+                <span class="text-slate-600">Decreases prostaglandin inflammation responsible for painful cramps.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 9. HEALTH CALENDAR SECTION (Existing) -->
+    <!-- ========================================================================= -->
+    <section id="tab-content-calendar" class="tab-pane hidden space-y-6">
+
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/80 shadow-soft">
+        <!-- Calendar Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <button onclick="changeCalendarMonth(-1)" class="w-9 h-9 rounded-2xl bg-white/80 hover:bg-white border border-pink-200 flex items-center justify-center text-slate-600 shadow-xs">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <h2 id="calendar-month-year" class="text-2xl font-display font-bold text-slate-800 tracking-tight">October 2026</h2>
+            <button onclick="changeCalendarMonth(1)" class="w-9 h-9 rounded-2xl bg-white/80 hover:bg-white border border-pink-200 flex items-center justify-center text-slate-600 shadow-xs">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Calendar Legend -->
+          <div class="flex flex-wrap items-center gap-3 text-xs font-semibold">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-400"></span> Period Days</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-pink-200"></span> Predicted Period</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-300"></span> Ovulation</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400"></span> Medicine Taken</span>
+          </div>
+        </div>
+
+        <!-- Days of Week Header -->
+        <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+
+        <!-- Calendar Days Grid -->
+        <div id="calendar-days-grid" class="grid grid-cols-7 gap-2">
+          <!-- Dynamically populated day cells -->
+        </div>
+
+        <!-- Selected Day Details Card -->
+        <div id="calendar-day-details" class="mt-6 p-4 rounded-2xl bg-white/70 border border-white/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-lg font-display" id="selected-day-num-box">
+              25
+            </div>
+            <div>
+              <h4 id="selected-day-title" class="font-bold text-slate-800 text-sm">Today's Health Summary</h4>
+              <p id="selected-day-subtitle" class="text-xs text-slate-500 font-medium">Ovulation Window • All doses taken • 8 glasses water</p>
+            </div>
+          </div>
+          <button onclick="openLogPeriodModal()" class="btn-aesthetic text-xs font-bold px-4 py-2 rounded-xl bg-pink-500 text-white hover:bg-pink-600 shadow-xs">
+            Log / Edit Notes for This Day
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto pt-8 pb-4 text-center text-xs text-slate-400 flex flex-col items-center gap-1">
+      <div class="flex items-center gap-1.5 font-medium text-slate-500">
+        <span>Crafted with</span>
+        <span class="text-rose-400">💖</span>
+        <span>and snowflakes for women's healthcare</span>
+        <span>• SnowyCare &copy; 2026</span>
+      </div>
+      <p class="text-[11px] text-slate-400">Medical Disclaimer: SnowyCare provides educational guidance and wellness tools. It does not replace professional medical diagnosis.</p>
+    </footer>
+
+  </div>
+
+  <!-- ==================== MODALS & POPUPS ==================== -->
+
+  <!-- 1. ONE-TAP EMERGENCY AMBULANCE SOS MODAL (Feature I) -->
+  <div id="emergency-sos-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-panel-elevated max-w-lg w-full mx-4 rounded-3xl p-6 sm:p-7 border-2 border-rose-300 shadow-2xl bg-white/95 text-center relative overflow-hidden">
+      
+      <!-- Top Red Alert Bar -->
+      <div class="flex items-center justify-between pb-3 border-b border-rose-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold">
+            <i data-lucide="ambulance" class="w-4 h-4"></i>
+          </div>
+          <div class="text-left">
+            <h3 class="font-display font-bold text-lg text-rose-900 leading-tight">Emergency Medical Assistance (SOS)</h3>
+            <span class="text-[10px] text-rose-600 font-bold uppercase tracking-wider">Priority 1 Response Channel</span>
+          </div>
+        </div>
+        <button onclick="closeEmergencySosModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Live GPS Geolocation Display Card -->
+      <div class="my-4 p-4 rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50/50 border border-rose-200 text-left space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-ping"></span>
+            <span>Your Live GPS Location (Sharing with Paramedics):</span>
+          </span>
+          <button onclick="refreshUserGpsLocation()" class="text-[10px] text-pink-600 font-bold hover:underline flex items-center gap-1">
+            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Refresh GPS
+          </button>
+        </div>
+
+        <div class="p-3 rounded-xl bg-white/90 border border-rose-100 text-xs font-mono text-slate-800 space-y-1">
+          <div class="font-bold text-rose-700 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-500"></i>
+            <span id="sos-live-address">Detecting GPS location...</span>
+          </div>
+          <div class="text-[11px] text-slate-500">
+            Coordinates: <span id="sos-coordinates">37.7749° N, 122.4194° W</span> (Accuracy: ±5m)
+          </div>
+        </div>
+
+        <!-- Critical Medical Alerts to Transmit -->
+        <div class="text-[11px] text-slate-600 pt-1">
+          <b class="text-rose-700">Medical Alerts Transmitted:</b> <span id="sos-medical-tags">Allergies: Penicillin & NSAIDs • Blood: O+</span>
+        </div>
+      </div>
+
+      <!-- 1-Tap Direct Call & Request Ambulance -->
+      <div class="space-y-3">
+        <button onclick="triggerAmbulanceDispatch()" id="btn-request-ambulance" class="btn-sos w-full py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg">
+          <i data-lucide="siren" class="w-5 h-5 animate-spin"></i>
+          <span>Request Immediate Ambulance Dispatch</span>
+        </button>
+
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <a href="tel:911" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold flex items-center justify-center gap-1.5">
+            <i data-lucide="phone-call" class="w-4 h-4 text-rose-600"></i>
+            <span>Dial 911 / 112 Direct</span>
+          </a>
+          <button onclick="notifyEmergencyContact()" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold flex items-center justify-center gap-1.5">
+            <i data-lucide="send" class="w-4 h-4 text-sky-600"></i>
+            <span>Alert Emergency Contact</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Dispatch Status Card (Hidden until triggered) -->
+      <div id="sos-dispatch-status-card" class="mt-4 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-left text-xs space-y-2 hidden">
+        <div class="flex items-center justify-between font-bold text-emerald-800">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="sos-status-headline">Ambulance Dispatched!</span>
+          </span>
+          <span class="text-rose-600 font-mono text-xs">ETA: 7 Mins</span>
+        </div>
+        <p class="text-slate-600" id="sos-status-details">
+          Paramedic Unit #A-204 (St. Mary's Emergency Services) is en route with sirens active. Paramedics have received your GPS coordinates and allergy profile.
+        </p>
+      </div>
+
+      <div class="text-[10px] text-slate-400 mt-4 text-center">
+        SnowyCare connects directly to legitimate regional emergency CAD interfaces. Keep phone line open.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ALLERGY CONFLICT SAFETY ALERT MODAL (Feature H) -->
+  <div id="allergy-conflict-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-panel-elevated max-w-md w-full mx-4 rounded-3xl p-6 sm:p-7 border-2 border-rose-400 shadow-2xl bg-white/95 text-center relative overflow-hidden animate-bounce-gentle">
+      <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="alert-octagon" class="w-8 h-8"></i>
+      </div>
+
+      <span class="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200 mb-2">
+        ⚠️ CRITICAL ALLERGY CONFLICT DETECTED
+      </span>
+
+      <h3 class="text-xl font-display font-bold text-slate-800" id="allergy-alert-title">
+        Potential Medication Conflict
+      </h3>
+
+      <div class="my-3 p-4 rounded-2xl bg-rose-50/80 border border-rose-200 text-xs text-left space-y-2 text-slate-700">
+        <div>
+          <b class="text-rose-700">Your Recorded Allergy:</b> <span id="allergy-alert-recorded" class="font-bold">Penicillin</span>
+        </div>
+        <div>
+          <b class="text-slate-800">Conflicting Medication:</b> <span id="allergy-alert-med" class="font-bold text-rose-600">Amoxicillin 500mg</span>
+        </div>
+        <div>
+          <b class="text-slate-800">Clinical Risk:</b> <span id="allergy-alert-reaction">Severe adverse reaction (Hives, angioedema, anaphylactic risk).</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-500 font-medium leading-relaxed">
+        Never take this medication without explicit verification from your prescribing physician or licensed pharmacist.
+      </p>
+
+      <div class="flex items-center justify-center gap-3 mt-5">
+        <button onclick="dismissAllergyModal(false)" class="btn-girly-primary px-6 py-2.5 rounded-2xl text-xs font-bold shadow-md">
+          Cancel & Do Not Add 🛑
+        </button>
+        <button onclick="dismissAllergyModal(true)" class="btn-girly-secondary px-4 py-2.5 rounded-2xl text-xs font-bold text-slate-600">
+          Override with Doctor Note
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. LIVE DOCTOR VIDEO CONSULTATION ROOM (Feature G) -->
+  <div id="doctor-video-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden">
+    <div class="glass-panel-elevated max-w-4xl w-full mx-4 rounded-3xl p-6 border border-white/90 shadow-2xl bg-slate-900 text-white flex flex-col max-h-[92vh] overflow-hidden">
+      
+      <!-- Video Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+          <div>
+            <h3 class="font-display font-bold text-base text-white" id="video-doc-name">Consultation with Dr. Evelyn Frost, MD</h3>
+            <span class="text-xs text-slate-400 font-mono" id="video-call-timer">00:02:14 • Encrypted WebRTC Session</span>
+          </div>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-emerald-400 font-bold border border-slate-700">HD Audio/Video</span>
+      </div>
+
+      <!-- Main Video Screen Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-4 flex-grow overflow-hidden">
+        <!-- Main Doctor Feed -->
+        <div class="md:col-span-8 video-preview-box min-h-[300px] flex items-center justify-center relative p-4">
+          <div class="text-center space-y-2">
+            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400 to-rose-400 mx-auto flex items-center justify-center text-3xl font-display font-bold text-white shadow-lg">
+              EF
+            </div>
+            <h4 class="font-bold text-lg text-white">Dr. Evelyn Frost, MD</h4>
+            <p class="text-xs text-slate-300">Listening to patient concerns • Audio connected</p>
+          </div>
+
+          <!-- Patient Picture-in-Picture Preview -->
+          <div class="absolute bottom-4 right-4 w-28 h-20 bg-slate-800 rounded-2xl border border-slate-700 flex items-center justify-center shadow-lg overflow-hidden">
+            <span class="text-[10px] text-slate-400 font-bold">You (Camera On)</span>
+          </div>
+        </div>
+
+        <!-- Sidebar Chat & Doctor Clinical Notes -->
+        <div class="md:col-span-4 bg-slate-800/80 rounded-2xl p-4 flex flex-col justify-between border border-slate-700 text-xs">
+          <div class="space-y-3">
+            <h4 class="font-bold text-pink-300 flex items-center gap-1.5">
+              <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+              <span>Shared Clinical Notes</span>
+            </h4>
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-300 space-y-1.5">
+              <b class="text-white block text-xs">Primary Observation:</b>
+              <p class="text-[11px] leading-relaxed">Mild fatigue secondary to iron deficiency. Recommended continuing elemental iron 100mg with Vitamin C. Follow-up in 8 weeks.</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-3 border-t border-slate-700">
+            <span class="text-[10px] text-slate-400">Digital prescription will automatically appear in your Pharmacy tab.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Control Bar -->
+      <div class="flex items-center justify-center gap-4 pt-2">
+        <button id="btn-toggle-mic" onclick="toggleConsultMic()" class="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all" title="Toggle Microphone">
+          <i data-lucide="mic" class="w-5 h-5"></i>
+        </button>
+        <button id="btn-toggle-cam" onclick="toggleConsultCam()" class="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center transition-all" title="Toggle Camera">
+          <i data-lucide="video" class="w-5 h-5"></i>
+        </button>
+        <button onclick="endDoctorConsult()" class="px-6 py-2.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all" title="End Consultation">
+          <i data-lucide="phone-off" class="w-4 h-4"></i>
+          <span>End Consultation</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4. NOTIFICATION CENTER MODAL (Feature F) -->
+  <div id="notification-center-modal" class="fixed inset-0 z-50 flex items-center justify-end bg-slate-900/30 backdrop-blur-xs hidden">
+    <div class="glass-panel-elevated max-w-sm w-full h-full p-6 shadow-2xl bg-white/95 flex flex-col justify-between overflow-y-auto">
+      <div class="space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center font-bold">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-base text-slate-800">Notification Center</h3>
+              <p class="text-[10px] text-slate-500">Personalized healthcare alerts</p>
+            </div>
+          </div>
+          <button onclick="closeNotificationModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Privacy Alert Mode Toggle -->
+        <div class="p-3 rounded-2xl bg-pink-50/70 border border-pink-100 flex items-center justify-between text-xs">
+          <div>
+            <b class="text-slate-800 block">Discreet Notifications</b>
+            <span class="text-[10px] text-slate-500">Masks sensitive terms on banner</span>
+          </div>
+          <input type="checkbox" id="check-discreet-notifs" onchange="toggleDiscreetModeFromSettings(this.checked)" class="accent-pink-500 w-4 h-4 rounded">
+        </div>
+
+        <!-- Notification List Container -->
+        <div class="space-y-2.5" id="notification-items-list">
+          <!-- Dynamically populated notifications -->
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <button onclick="markAllNotificationsRead()" class="text-pink-600 font-bold hover:underline">Mark all read</button>
+        <button onclick="clearAllNotifications()" class="text-slate-400 hover:text-slate-600">Clear all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 5-MINUTE PHARMACY CHECKOUT & TRACKER MODAL (Feature C) -->
+  <div id="pharmacy-checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm hidden">
+    <div class="glass-panel-elevated max-w-md w-full mx-4 rounded-3xl p-6 border border-white/95 shadow-2xl bg-white/95 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-display font-bold text-lg text-slate-800">5-Minute Express Checkout</h3>
+        </div>
+        <button onclick="closePharmacyCheckoutModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Allergy Verification Badge -->
+      <div class="my-3 p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs flex items-center gap-2 text-emerald-800">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+        <span>Allergy Cross-Check: Verified Safe against your recorded allergies.</span>
+      </div>
+
+      <div class="space-y-3 pt-1 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Prescription Items</label>
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5 font-medium">
+            <div class="flex justify-between">
+              <span>Ferrous Ascorbate 100mg + Folic Acid</span>
+              <span class="font-bold text-slate-800">$14.50</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Elemental Vitamin D3 60,000 IU (4 caps)</span>
+              <span class="font-bold text-slate-800">$8.20</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Gentle Acetaminophen 500mg (NSAID-free)</span>
+              <span class="font-bold text-slate-800">$6.50</span>
+            </div>
+            <div class="flex justify-between font-bold text-rose-600 pt-1 border-t border-slate-200">
+              <span>Total Amount:</span>
+              <span>$29.20</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Payment Method</label>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <label class="p-2.5 rounded-xl border border-pink-200 bg-pink-50/50 flex flex-col items-center gap-1 cursor-pointer">
+              <input type="radio" name="paymethod" checked class="accent-pink-500">
+              <span class="font-bold text-slate-700">Apple Pay</span>
+            </label>
+            <label class="p-2.5 rounded-xl border border-slate-200 flex flex-col items-center gap-1 cursor-pointer">
+              <input type="radio" name="paymethod" class="accent-pink-500">
+              <span class="font-bold text-slate-700">Credit Card</span>
+            </label>
+            <label class="p-2.5 rounded-xl border border-slate-200 flex flex-col items-center gap-1 cursor-pointer">
+              <input type="radio" name="paymethod" class="accent-pink-500">
+              <span class="font-bold text-slate-700">Cash on Del.</span>
+            </label>
+          </div>
+        </div>
+
+        <button onclick="placeMedicineOrder()" class="btn-girly-primary w-full py-3.5 rounded-2xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md mt-4">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Confirm & Place Order ($29.20)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ADD MEDICAL RECORD MODAL (Feature A) -->
+  <div id="add-medical-record-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="glass-panel max-w-lg w-full mx-4 rounded-3xl p-6 border border-white/95 shadow-2xl bg-white/95 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <h3 class="font-display font-bold text-lg text-slate-800">Add to Medical History</h3>
+        <button onclick="closeAddMedicalRecordModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleSaveMedicalRecord(event)" class="space-y-4 pt-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Entry Category</label>
+          <select id="form-record-category" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white font-medium" onchange="adjustRecordFormFields(this.value)">
+            <option value="condition">Medical Condition / Illness 🩺</option>
+            <option value="record">Clinical Consultation / Record 📋</option>
+            <option value="medication">Previous Medication 💊</option>
+            <option value="allergy">Allergy & Known Reaction ⚠️</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1" id="label-record-title">Condition or Illness Name *</label>
+          <input type="text" id="form-record-title" required placeholder="e.g. Iron Deficiency Anemia, PCOS, Penicillin Allergy" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 font-medium">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Date</label>
+            <input type="date" id="form-record-date" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 font-medium">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1" id="label-record-status">Status / Severity</label>
+            <select id="form-record-status" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white font-medium">
+              <option value="Active">Active / Ongoing</option>
+              <option value="Managed">Managed with Medication</option>
+              <option value="Resolved">Resolved / Completed</option>
+              <option value="Severe">Severe (Anaphylaxis Risk)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Physician / Facility Notes</label>
+          <textarea id="form-record-notes" rows="3" placeholder="Enter clinical details, dosage, or symptoms..." class="w-full p-3 rounded-2xl border border-slate-200 font-medium"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-pink-100">
+          <button type="button" onclick="closeAddMedicalRecordModal()" class="px-4 py-2.5 rounded-2xl text-slate-500 font-bold hover:bg-slate-100">Cancel</button>
+          <button type="submit" class="btn-girly-primary px-6 py-2.5 rounded-2xl font-bold shadow-md">Save Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. LIVE ALARM MODAL (Triggered when medicine time arrives) -->
+  <div id="alarm-trigger-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-panel max-w-md w-full mx-4 rounded-3xl p-6 sm:p-8 border-2 border-white/90 shadow-2xl bg-white/95 text-center relative overflow-hidden animate-bounce-gentle">
+      <div class="relative z-10">
+        <div id="alarm-bear-slot" class="w-32 h-32 mx-auto mb-3 bear-breathing"></div>
+
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-bold border border-pink-200 mb-2">
+          <span>⏰ RING RING!</span> Snowy's Medicine Bell
+        </div>
+
+        <h3 id="alarm-modal-med-name" class="text-2xl font-display font-bold text-slate-800">
+          Time for Iron & Vitamin C!
+        </h3>
+        
+        <p id="alarm-modal-med-dosage" class="text-sm font-semibold text-pink-600 mt-1">
+          Dosage: 1 Tablet
+        </p>
+
+        <p id="alarm-modal-med-instruction" class="text-xs text-slate-500 mt-2 bg-pink-50/70 p-3 rounded-2xl border border-pink-100 font-medium">
+          "Take with plenty of warm water or orange juice, pookie! Snowy is cheering for you! 🐻‍❄️✨"
+        </p>
+
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <button onclick="dismissAlarm('taken')" class="btn-girly-primary px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Mark as Taken ✨</span>
+          </button>
+          <button onclick="dismissAlarm('snooze')" class="btn-girly-secondary px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-xs">
+            <i data-lucide="clock" class="w-4 h-4"></i>
+            <span>Snooze 5 Min ⏳</span>
+          </button>
+        </div>
+
+        <button onclick="dismissAlarm('skip')" class="text-xs text-slate-400 hover:text-slate-600 font-medium mt-4 block mx-auto underline">
+          Skip dose today
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. ADD / EDIT MEDICATION MODAL (With allergy checker) -->
+  <div id="add-med-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="glass-panel max-w-lg w-full mx-4 rounded-3xl p-6 sm:p-7 border border-white/90 shadow-2xl bg-white/95 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center">
+            <i data-lucide="pill" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-display font-bold text-lg text-slate-800">Add New Medication / Vitamin</h3>
+        </div>
+        <button onclick="closeAddMedModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="add-med-form" onsubmit="handleSaveMedication(event)" class="space-y-4 pt-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Medication or Vitamin Name *</label>
+          <input type="text" id="form-med-name" required placeholder="e.g. Birth Control, Vitamin D3, Iron Supplement" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium" oninput="liveCheckAllergyOnInput(this.value)">
+          <div id="form-med-allergy-hint" class="text-[11px] font-bold text-rose-600 mt-1 hidden"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Dosage *</label>
+            <input type="text" id="form-med-dosage" required placeholder="e.g. 1 Tablet, 500mg, 2 Drops" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Type / Category</label>
+            <select id="form-med-type" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium">
+              <option value="pill">Pill / Tablet 💊</option>
+              <option value="capsule">Capsule 🧫</option>
+              <option value="gummy">Gummy / Chewable 🍓</option>
+              <option value="liquid">Liquid / Syrup 🧴</option>
+              <option value="injection">Injection / Pen 💉</option>
+              <option value="patch">Hormone Patch 🩹</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Alarm Time *</label>
+          <input type="time" id="form-med-time" required value="08:00" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-bold text-sm">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Pookie Instructions & Reminders</label>
+          <input type="text" id="form-med-notes" placeholder="e.g. Take with breakfast, don't take on empty stomach" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Remaining Supply</label>
+            <input type="number" id="form-med-stock" value="30" min="1" max="500" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Color Badge</label>
+            <select id="form-med-color" class="w-full px-3.5 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-pink-300 outline-none text-slate-800 font-medium">
+              <option value="pink">Blossom Pink 🌸</option>
+              <option value="sky">Ice Sky Blue ❄️</option>
+              <option value="purple">Lilac Lavender 💜</option>
+              <option value="emerald">Mint Herb 🌿</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-pink-100">
+          <button type="button" onclick="closeAddMedModal()" class="px-4 py-2.5 rounded-2xl text-slate-500 font-bold hover:bg-slate-100">Cancel</button>
+          <button type="submit" class="btn-girly-primary px-6 py-2.5 rounded-2xl font-bold shadow-md">Save Medication</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 9. LOG PERIOD / SYMPTOMS MODAL -->
+  <div id="log-period-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="glass-panel max-w-lg w-full mx-4 rounded-3xl p-6 border border-white/90 shadow-2xl bg-white/95 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🌸</span>
+          <h3 class="font-display font-bold text-lg text-slate-800">Log Cycle & Body Journal</h3>
+        </div>
+        <button onclick="closeLogPeriodModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 pt-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Select Date</label>
+          <input type="date" id="log-modal-date" class="w-full px-3.5 py-2 rounded-2xl border border-slate-200 font-medium">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Flow Level</label>
+          <div class="grid grid-cols-4 gap-2 text-center" id="modal-flow-grid">
+            <button type="button" onclick="setModalFlow('none', this)" class="p-2 rounded-xl border border-pink-200 active">None</button>
+            <button type="button" onclick="setModalFlow('light', this)" class="p-2 rounded-xl border border-pink-200">Light</button>
+            <button type="button" onclick="setModalFlow('medium', this)" class="p-2 rounded-xl border border-pink-200">Medium</button>
+            <button type="button" onclick="setModalFlow('heavy', this)" class="p-2 rounded-xl border border-pink-200">Heavy</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Personal Note / Diary Entry</label>
+          <textarea id="log-modal-notes" rows="3" placeholder="How did your body feel today? Cozy tea drunk, cuddles needed..." class="w-full p-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-pink-300 outline-none text-slate-700 font-medium"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-pink-100">
+          <button type="button" onclick="closeLogPeriodModal()" class="px-4 py-2 rounded-2xl text-slate-500 font-bold hover:bg-slate-100">Cancel</button>
+          <button type="button" onclick="savePeriodLog()" class="btn-girly-primary px-6 py-2.5 rounded-2xl font-bold shadow-md">Save Log</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. CYCLE SETTINGS MODAL -->
+  <div id="cycle-settings-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden">
+    <div class="glass-panel max-w-md w-full mx-4 rounded-3xl p-6 border border-white/90 shadow-2xl bg-white/95">
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <h3 class="font-display font-bold text-lg text-slate-800">Customize Cycle Settings</h3>
+        <button onclick="closeCycleSettingsModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 pt-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">First Day of Last Period</label>
+          <input type="date" id="settings-last-period-date" class="w-full px-3 py-2 rounded-2xl border border-slate-200 font-medium">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Average Cycle Length (Days)</label>
+          <input type="number" id="settings-cycle-length" min="20" max="45" value="28" class="w-full px-3 py-2 rounded-2xl border border-slate-200 font-bold">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Average Period Duration (Days)</label>
+          <input type="number" id="settings-period-duration" min="2" max="10" value="5" class="w-full px-3 py-2 rounded-2xl border border-slate-200 font-bold">
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-pink-100">
+          <button type="button" onclick="closeCycleSettingsModal()" class="px-4 py-2 rounded-2xl text-slate-500 font-bold hover:bg-slate-100">Cancel</button>
+          <button type="button" onclick="saveCycleSettings()" class="btn-girly-primary px-6 py-2.5 rounded-2xl font-bold shadow-md">Apply Settings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Scripts -->
+  <script src="js/bear.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
